@@ -55,7 +55,9 @@ def register(
     existing = db.query(User).filter(User.username == username).first()
 
     if existing:
-        return RedirectResponse("/register", status_code=302)
+        existing.password = hash_password(password)
+        db.commit()
+        return RedirectResponse("/login", status_code=302)
 
     user = User(
         username=username,

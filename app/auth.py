@@ -1,19 +1,41 @@
-from passlib.context import CryptContext
+import hashlib
+import secrets
+
 from jose import jwt
 
 SECRET_KEY = "SUPER_SECRET_KEY"
 ALGORITHM = "HS256"
 
-pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
+HASH_ITERATIONS = 260000
 
 
 def hash_password(password):
-    return pwd_context.hash(password)
+    salt = secrets.token_hex(16)
+    password_hash = hashlib.pbkdf2_hmac(
+        "sha256",
+        password.encode("utf-8"),
+        salt.encode("utf-8"),
+        HASH_ITERATIONS
+    ).hex()
+
+    return f"pbkdf2_sha256${salt}${password_hash}"
 
 
 def verify_password(plain, hashed):
     try:
-        return pwd_context.verify(plain, hashed)
+        algorithm, salt, saved_hash = hashed.split("$", 2)
+
+        if algorithm != "pbkdf2_sha256":
+            return False
+
+        password_hash = hashlib.pbkdf2_hmac(
+            "sha256",
+            plain.encode("utf-8"),
+            salt.encode("utf-8"),
+            HASH_ITERATIONS
+        ).hex()
+
+        return secrets.compare_digest(password_hash, saved_hash)
     except Exception:
         return False
 

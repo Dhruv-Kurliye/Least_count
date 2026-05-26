@@ -3,6 +3,5 @@ uvicorn
 jinja2
 sqlalchemy
 python-multipart
-passlib
 python-jose
 aiofiles
