@@ -53,10 +53,11 @@ def register(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
+    username = username.strip()
     existing = db.query(User).filter(User.username == username).first()
 
     if existing:
-        return RedirectResponse("/register?error=user_exists", status_code=302)
+        return RedirectResponse("/register?error=user_exists", status_code=303)
 
     user = User(
         username=username,
@@ -66,7 +67,7 @@ def register(
     db.add(user)
     db.commit()
 
-    return RedirectResponse("/login", status_code=302)
+    return RedirectResponse("/login?registered=1", status_code=303)
 
 
 @router.get("/login")
@@ -79,7 +80,9 @@ def login_page(request: Request):
         "login.html",
         {
             "request": request,
-            "show_nav": False
+            "show_nav": False,
+            "error": request.query_params.get("error"),
+            "registered": request.query_params.get("registered")
         }
     )
 
@@ -90,15 +93,16 @@ def login(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
+    username = username.strip()
     user = db.query(User).filter(User.username == username).first()
 
     if not user:
-        return RedirectResponse("/login", status_code=302)
+        return RedirectResponse("/login?error=invalid_credentials", status_code=303)
 
     if not verify_password(password, user.password):
-        return RedirectResponse("/login", status_code=302)
+        return RedirectResponse("/login?error=invalid_credentials", status_code=303)
 
-    response = RedirectResponse("/dashboard", status_code=302)
+    response = RedirectResponse("/dashboard", status_code=303)
 
     response.set_cookie(
         key="user",

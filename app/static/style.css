@@ -398,6 +398,13 @@ select:focus {
     animation: alert-pop 0.22s ease-out;
 }
 
+.success-alert {
+    border: 1px solid #99f6e4;
+    background: #ccfbf1;
+    color: var(--success);
+    animation: alert-pop 0.22s ease-out;
+}
+
 @keyframes alert-pop {
     from {
         opacity: 0;

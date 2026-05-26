@@ -6,6 +6,18 @@
     <p class="eyebrow">Welcome</p>
     <h1>Login</h1>
 
+    {% if registered %}
+    <div class="alert success-alert" role="alert">
+        Account created. You can log in now.
+    </div>
+    {% endif %}
+
+    {% if error == "invalid_credentials" %}
+    <div class="alert error-alert" role="alert">
+        Invalid username or password.
+    </div>
+    {% endif %}
+
     <form action="/login" method="post">
 
         <input type="text" name="username" placeholder="Username" required>
