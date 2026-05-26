@@ -6,6 +6,12 @@
     <p class="eyebrow">Start playing</p>
     <h1>Register</h1>
 
+    {% if error == "user_exists" %}
+    <div class="alert error-alert" role="alert">
+        Username already exists. Please choose another username.
+    </div>
+    {% endif %}
+
     <form action="/register" method="post">
 
         <input type="text" name="username" placeholder="Username" required>

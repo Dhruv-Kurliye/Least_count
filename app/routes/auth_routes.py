@@ -41,7 +41,8 @@ def register_page(request: Request):
         "register.html",
         {
             "request": request,
-            "show_nav": False
+            "show_nav": False,
+            "error": request.query_params.get("error")
         }
     )
 
@@ -55,9 +56,7 @@ def register(
     existing = db.query(User).filter(User.username == username).first()
 
     if existing:
-        existing.password = hash_password(password)
-        db.commit()
-        return RedirectResponse("/login", status_code=302)
+        return RedirectResponse("/register?error=user_exists", status_code=302)
 
     user = User(
         username=username,

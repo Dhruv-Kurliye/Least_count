@@ -383,6 +383,33 @@ select:focus {
     margin: 18px 0;
 }
 
+.alert {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.error-alert {
+    border: 1px solid #fecaca;
+    background: #fee2e2;
+    color: var(--danger);
+    animation: alert-pop 0.22s ease-out;
+}
+
+@keyframes alert-pop {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .text-link {
     color: var(--primary);
     font-weight: 800;
