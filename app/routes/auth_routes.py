@@ -12,9 +12,6 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="app/templates")
 
-SESSION_MAX_AGE_SECONDS = 60 * 60
-
-
 def get_db():
     db = SessionLocal()
     try:
@@ -107,7 +104,6 @@ def login(
     response.set_cookie(
         key="user",
         value=username,
-        max_age=SESSION_MAX_AGE_SECONDS,
         httponly=True,
         samesite="lax"
     )
