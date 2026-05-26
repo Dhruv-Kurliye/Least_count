@@ -1,6 +1,9 @@
 run = "python3 run.py"
 entrypoint = "run.py"
 
+[gitHubImport]
+requiredFiles = [".replit", "replit.nix"]
+
 [deployment]
 run = ["python3", "run.py"]
 deploymentTarget = "cloudrun"
