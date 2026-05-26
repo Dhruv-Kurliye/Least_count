@@ -1,11 +1,13 @@
-run = "python3 run.py"
+run = "python3 -m pip install -r requirements.txt && python3 run.py"
 entrypoint = "run.py"
+
+packager.language = "python3"
 
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
 
 [deployment]
-run = ["python3", "run.py"]
+run = ["sh", "-c", "python3 -m pip install -r requirements.txt && python3 run.py"]
 deploymentTarget = "cloudrun"
 
 [nix]
