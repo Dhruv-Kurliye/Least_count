@@ -1,8 +1,8 @@
-run = "python run.py"
+run = "python3 run.py"
 entrypoint = "run.py"
 
 [deployment]
-run = ["python", "run.py"]
+run = ["python3", "run.py"]
 deploymentTarget = "cloudrun"
 
 [nix]
