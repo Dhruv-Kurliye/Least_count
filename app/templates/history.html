@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Match history</p>
+        <h1>All matches</h1>
+        <p class="muted">Review active and completed games in one place.</p>
+    </div>
+
+    <a class="button" href="/create-match">New Match</a>
+</section>
+
+<section class="match-list">
+    {% for match in matches %}
+    <article class="card match-card">
+        <div>
+            <span class="status {% if match.is_finished %}status-finished{% else %}status-live{% endif %}">
+                {% if match.is_finished %}Finished{% else %}Active{% endif %}
+            </span>
+            <h3>{{ match.name }}</h3>
+            <p class="muted">Target score: {{ match.target_score }}</p>
+        </div>
+
+        <div class="match-meta">
+            {% if match.loser %}
+            <span>Loser: {{ match.loser }}</span>
+            {% else %}
+            <span>Still playing</span>
+            {% endif %}
+            <a class="text-link" href="/match/{{ match.id }}">Open</a>
+        </div>
+    </article>
+    {% else %}
+    <div class="empty-state">
+        <h2>No matches yet</h2>
+        <p>Create your first match and it will appear here.</p>
+        <a class="button" href="/create-match">Create Match</a>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}

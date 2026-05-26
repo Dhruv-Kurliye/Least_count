@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">Welcome back{% if current_user %}, {{ current_user }}{% endif %}</p>
+        <h1>Least Count Dashboard</h1>
+        <p>Track scores, review match history, and jump back into active games quickly.</p>
+    </div>
+
+    <div class="hero-actions">
+        <a class="button" href="/create-match">Create Match</a>
+        <a class="button secondary" href="/history">History Matches</a>
+    </div>
+</section>
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <span>{{ matches|length }}</span>
+        <p>Total Matches</p>
+    </div>
+    <div class="stat-card">
+        <span>{{ active_count }}</span>
+        <p>Active</p>
+    </div>
+    <div class="stat-card">
+        <span>{{ finished_count }}</span>
+        <p>Finished</p>
+    </div>
+</section>
+
+<section class="section-title">
+    <div>
+        <p class="eyebrow">Recent</p>
+        <h2>Your matches</h2>
+    </div>
+</section>
+
+<section class="match-grid">
+{% for match in matches %}
+
+<article class="card match-card">
+
+    <div>
+        <span class="status {% if match.is_finished %}status-finished{% else %}status-live{% endif %}">
+            {% if match.is_finished %}Finished{% else %}Active{% endif %}
+        </span>
+
+        <h3>{{ match.name }}</h3>
+
+        <p class="muted">Target: {{ match.target_score }}</p>
+
+        {% if match.loser %}
+        <p>Loser: {{ match.loser }}</p>
+        {% else %}
+        <p>Match in progress</p>
+        {% endif %}
+    </div>
+
+    <a class="button small" href="/match/{{ match.id }}">Open Match</a>
+
+</article>
+
+{% else %}
+<div class="empty-state">
+    <h2>No matches yet</h2>
+    <p>Create a match to start tracking scores.</p>
+    <a class="button" href="/create-match">Create Match</a>
+</div>
+{% endfor %}
+</section>
+
+{% endblock %}

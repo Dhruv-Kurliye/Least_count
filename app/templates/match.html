@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Match room</p>
+        <h1>{{ match.name }}</h1>
+        <p class="muted">Target Score: {{ match.target_score }}</p>
+    </div>
+
+    <a class="button secondary" href="/dashboard">Go Home</a>
+</section>
+
+{% if match.is_finished %}
+<div class="winner-banner">
+    <span>Match finished</span>
+    <strong>Loser: {{ match.loser }}</strong>
+</div>
+{% endif %}
+
+<section class="panel">
+    <div class="section-title compact">
+        <div>
+            <p class="eyebrow">Scoreboard</p>
+            <h2>Players</h2>
+        </div>
+    </div>
+
+    <div class="score-list">
+        {% for player in players %}
+        <div class="score-row">
+            <span>{{ player.name }}</span>
+            <strong>{{ player.total_score }}</strong>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<form class="panel form-panel" method="post" action="/match/{{ match.id }}/round">
+    <div class="section-title compact">
+        <div>
+            <p class="eyebrow">Round entry</p>
+            <h2>Add Round</h2>
+        </div>
+    </div>
+
+    <div class="round-grid">
+    {% for player in players %}
+
+    <label>
+        {{ player.name }}
+        <input type="number" name="score_{{ player.id }}" value="0" min="0">
+    </label>
+
+    {% endfor %}
+    </div>
+
+    <div class="form-grid">
+        <label>
+            Winner
+            <select name="winner">
+                {% for player in players %}
+                <option>{{ player.name }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>
+            50 Penalty Player
+            <select name="loser_penalty">
+
+                <option value="">None</option>
+
+                {% for player in players %}
+                <option>{{ player.name }}</option>
+                {% endfor %}
+
+            </select>
+        </label>
+    </div>
+
+    <button class="button" type="submit">
+        Add Round
+    </button>
+
+</form>
+
+{% endblock %}

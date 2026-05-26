@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Least Count</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    {% if show_nav is not defined or show_nav %}
+    <header class="topbar">
+        <a class="brand" href="/dashboard">
+            <span>LC</span>
+            Least Count
+        </a>
+
+        <nav>
+            <a href="/dashboard">Home</a>
+            <a href="/history">History</a>
+            <a href="/profile">Profile</a>
+            {% if current_user %}
+            <a class="nav-user" href="/profile">{{ current_user }}</a>
+            {% else %}
+            <a class="nav-user" href="/login">Login</a>
+            {% endif %}
+        </nav>
+    </header>
+    {% endif %}
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+
+</html>

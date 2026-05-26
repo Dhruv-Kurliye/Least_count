@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="profile-panel">
+    <div class="avatar">
+        {{ (current_user or "U")[0]|upper }}
+    </div>
+
+    <div>
+        <p class="eyebrow">User profile</p>
+        <h1>{{ current_user or "Player" }}</h1>
+        <p class="muted">Your Least Count activity and quick account actions.</p>
+    </div>
+</section>
+
+<section class="stats-grid">
+    <div class="stat-card">
+        <span>{{ matches|length }}</span>
+        <p>Total Matches</p>
+    </div>
+    <div class="stat-card">
+        <span>{{ active_count }}</span>
+        <p>Active</p>
+    </div>
+    <div class="stat-card">
+        <span>{{ finished_count }}</span>
+        <p>Finished</p>
+    </div>
+</section>
+
+<section class="panel">
+    <h2>Account</h2>
+    <div class="profile-actions">
+        <a class="button" href="/dashboard">Go Home</a>
+        <a class="button secondary" href="/history">History Matches</a>
+        <a class="button danger" href="/logout">Logout</a>
+    </div>
+</section>
+
+{% endblock %}

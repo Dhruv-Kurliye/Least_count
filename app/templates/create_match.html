@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="page-header">
+    <div>
+        <p class="eyebrow">New game</p>
+        <h1>Create Match</h1>
+        <p class="muted">Add players separated by commas. You can start scoring right away.</p>
+    </div>
+</section>
+
+<form class="panel form-panel" method="post">
+
+    <label>
+        Match Name
+        <input type="text" name="name" placeholder="Sunday game" required>
+    </label>
+
+    <label>
+        Target Score
+        <input type="number" name="target_score" placeholder="250" min="1" required>
+    </label>
+
+    <label>
+        Players
+        <textarea name="players" placeholder="Player1, Player2, Player3" required></textarea>
+    </label>
+
+    <button class="button" type="submit">
+        Create Match
+    </button>
+
+</form>
+
+{% endblock %}
